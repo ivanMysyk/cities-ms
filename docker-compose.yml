@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  postgresdb:
+    restart: unless-stopped
+    image: postgres:15
+    env_file: ./.env
+    environment:
+      - POSTGRES_USER=$POSTGREDB_USER
+      - POSTGRES_PASSWORD=POSTGREDB_ROOT_PASSWORD
+      - POSTGRES_DB=$POSTGREDB_DATABASE
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    depends_on:
+      - postgresdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb/$POSTGREDB_DATABASE
+      - SPRING_DATASOURCE_USERNAME=$POSTGREDB_USER
+      - SPRING_DATASOURCE_PASSWORD=$POSTGREDB_ROOT_PASSWORD
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./logs:/app/logs
+    stdin_open: true
+    tty: true

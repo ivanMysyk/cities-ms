@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      id: database_init
+      author: i.mysyk
+      preConditions:
+        - onFail: HALT
+      changes:
+        - sqlFile:
+            dbms: postgresql
+            encoding: utf8
+            path: /db/migrations/database_init.sql

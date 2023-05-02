@@ -31,12 +31,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class User {
 
-    public User(String username, String email, String encode) {
-        this.username = username;
-        this.email = email;
-        this.password = encode;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -60,6 +54,11 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    public User(String username, String email, String encode) {
+        this.username = username;
+        this.email = email;
+        this.password = encode;
+    }
 
 }
 

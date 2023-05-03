@@ -11,6 +11,18 @@ spring:
   liquibase:
     change-log: classpath:/db/db.changelog-master.yaml
     default-schema: public
+
 jwt:
   secret: secret
   expirationMs: 86400000
+
+logging:
+  file:
+    name: logs/app.log
+  pattern:
+    console: "%d %-5level %logger : %msg%n"
+    file: "%d %-5level [%thread] %logger : %msg%n"
+  level:
+    org.springframework.web: DEBUG
+    com.test.task.kuehne.cities.controller: DEBUG
+    org.hibernate: INFO

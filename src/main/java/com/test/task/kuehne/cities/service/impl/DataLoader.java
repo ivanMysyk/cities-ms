@@ -17,7 +17,7 @@ import java.net.URL;
 
 @Component
 @RequiredArgsConstructor
-@Profile("prod")
+@Profile("container")
 public class DataLoader implements ApplicationRunner {
     private final CityRepository cityRepository;
     private final CityPhotoRepository cityPhotoRepository;

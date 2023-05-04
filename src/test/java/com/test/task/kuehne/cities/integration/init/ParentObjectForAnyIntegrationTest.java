@@ -9,6 +9,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestConstructor;
+import org.springframework.test.context.junit.jupiter.DisabledIf;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc(addFilters = false)
 @TestConstructor(autowireMode = TestConstructor.AutowireMode.ALL)
 @ContextConfiguration(initializers = {PostgreSQl.Initializer.class})
+@DisabledIf(expression = "#{systemProperties['disableIntTests'] != null}",
+        reason = "Tests disabled by system property")
 public abstract class ParentObjectForAnyIntegrationTest {
 
     @BeforeAll

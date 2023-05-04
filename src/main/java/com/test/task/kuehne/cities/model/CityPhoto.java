@@ -38,6 +38,7 @@ public class CityPhoto {
 
     private byte[] data;
 
+    @Builder.Default
     @OneToMany(mappedBy = "photo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<City> cities = new ArrayList<>();
 }

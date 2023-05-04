@@ -1,11 +1,14 @@
-package com.test.task.kuehne.cities.service;
+package com.test.task.kuehne.cities.service.impl;
 
 import com.test.task.kuehne.cities.model.CityPhoto;
 import com.test.task.kuehne.cities.repository.CityPhotoRepository;
 import com.test.task.kuehne.cities.repository.CityRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -13,10 +16,13 @@ import java.io.InputStream;
 import java.net.URL;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
+@Profile("prod")
 public class DataLoader implements ApplicationRunner {
     private final CityRepository cityRepository;
     private final CityPhotoRepository cityPhotoRepository;
+
+    private final Logger log = LoggerFactory.getLogger(DataLoader.class.getName());
 
     @Override
     public void run(ApplicationArguments args) {
@@ -36,8 +42,8 @@ public class DataLoader implements ApplicationRunner {
                     city.setPhoto(photo);
                     cityRepository.save(city);
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (Exception e) {
+                log.error(e.getMessage());
             }
         });
     }
